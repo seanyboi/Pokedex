@@ -9,7 +9,7 @@
 import Foundation
 
 
-//class that will hold all pokemon
+//class that will hold all pokemon, helps create pokemon as objects
 class Pokemon {
     
     //unwrapped because we know it will exist
