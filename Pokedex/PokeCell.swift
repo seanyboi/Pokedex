@@ -19,6 +19,14 @@ class PokeCell: UICollectionViewCell {
     
     var pokemon: Pokemon!
     
+    //rounded corners done as the layer level
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        layer.cornerRadius = 5.0
+        
+    }
+    
     //create a function when we are ready to update each collection view cell
     
     func configureCell(pokemon: Pokemon) {
@@ -28,6 +36,8 @@ class PokeCell: UICollectionViewCell {
         
         
     }
+    
+    
     
     
 }
