@@ -29,7 +29,7 @@ class PokeCell: UICollectionViewCell {
     
     //create a function when we are ready to update each collection view cell
     
-    func configureCell(pokemon: Pokemon) {
+    func configureCell(_ pokemon: Pokemon) {
         
         nameLbl.text = pokemon.name.capitalized
         thumbImg.image = UIImage(named: "\(pokemon.pokedexID)")
