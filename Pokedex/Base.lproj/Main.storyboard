@@ -60,7 +60,7 @@
                                     <constraint firstItem="hMn-qO-Fpz" firstAttribute="centerX" secondItem="El8-9C-LhU" secondAttribute="centerX" id="tU0-LH-Opp"/>
                                 </constraints>
                             </view>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="Ysb-W4-ku7">
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Pokemon" translatesAutoresizingMaskIntoConstraints="NO" id="Ysb-W4-ku7">
                                 <rect key="frame" x="0.0" y="65" width="375" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="d27-qw-mfx"/>
@@ -121,6 +121,7 @@
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="El8-9C-LhU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="0Xw-xx-9H0"/>
                             <constraint firstAttribute="trailing" secondItem="El8-9C-LhU" secondAttribute="trailing" id="26d-jH-0T0"/>
@@ -137,12 +138,17 @@
                             <constraint firstAttribute="trailing" secondItem="74J-sS-Mkd" secondAttribute="trailing" id="rir-AP-KrB"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="74J-sS-Mkd" secondAttribute="bottom" id="s0b-rs-2in"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Ewj-Wk-5QH" appends="YES" id="fJm-F9-jur"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="collection" destination="bVe-hN-wqM" id="XfN-X1-Gpt"/>
+                        <outlet property="searchBar" destination="Ysb-W4-ku7" id="yIH-ug-v7W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Ewj-Wk-5QH"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
         </scene>

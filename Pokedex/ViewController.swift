@@ -9,20 +9,33 @@
 import UIKit
 import AVFoundation //as working with audio
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
     
     @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     //array of pokemon
     var pokemon = [Pokemon]()
+    //for search bar function
+    var filteredPokemon = [Pokemon]()
+    //for music player
     var musicPlayer: AVAudioPlayer!
+    //for whether we're in search mode or not
+    var inSearchMode = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         collection.dataSource = self
         collection.delegate = self
+        searchBar.delegate = self
+        
+        searchBar.returnKeyType = UIReturnKeyType.done
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
         
         parsePokemonCSV()
         initAudio()
@@ -91,8 +104,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PokeCell", for: indexPath) as? PokeCell {
             
             //going to call configureCell from PokeCell and pass in the pokemon we created and take that data and set label and image in main storyboard to whatever is passed in the viewcontroller
-            let poke = pokemon[indexPath.row]
-            cell.configureCell(poke)
+            let poke: Pokemon!
+            
+            
+            if inSearchMode {
+                poke = filteredPokemon[indexPath.row]
+                cell.configureCell(poke)
+            } else {
+                poke = pokemon[indexPath.row]
+                cell.configureCell(poke)
+            }
             
             return cell
             
@@ -112,8 +133,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         
-        return pokemon.count
+        if inSearchMode {
+
+            return filteredPokemon.count
+        }
         
+        return pokemon.count
     }
     
     //number of collections
@@ -142,6 +167,45 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             musicPlayer.play()
             sender.alpha = 1.0
         }
+        
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        view.endEditing(true)
+        
+        
+    }
+    
+    func dismissKeyboard() {
+        searchBar.resignFirstResponder()
+    }
+    
+    //everytime we make a keystroke this will be called
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchBar.text == nil || searchBar.text == "" {
+            
+            inSearchMode = false
+            collection.reloadData()
+            //keyboard will go away
+            view.endEditing(true)
+            
+        } else {
+            inSearchMode = true
+            
+            //string that is entered in search bar
+            let lower = searchBar.text!.lowercased()
+            
+            //the filtered pokemon list is going to be equal to the original pokemon list but filtered
+            //$0 can be though of a placeholder of any and all objects in roginal pokemon array
+            //for each pokemon object we are taking the name value and if what we put in the search bar is contained in that range of names we will put it into the filtered pokemon list.
+            filteredPokemon = pokemon.filter({$0.name.range(of: lower) != nil })
+            //repopulate collectionview with new data
+            collection.reloadData()
+            
+        }
+        
         
     }
 
