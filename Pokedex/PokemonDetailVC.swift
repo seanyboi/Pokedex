@@ -31,11 +31,30 @@ class PokemonDetailVC: UIViewController {
         
         
         nameLbl.text = pokemon.name.capitalized
+        
+        pokemon.downloadPokemonDetail {
+        
+            //Whatever we write here will only be called after network call completed
+            self.updateUI()
+            
+        }
 
     
         
     }
+    
+    func updateUI() {
+        
+        attackLbl.text = pokemon.attack
+        defenseLbl.text = pokemon.defense
+        heightLbl.text = pokemon.height
+        weightLbl.text = pokemon.weight
+        
+        
+        
+    }
 
+    //dismisses frame
     @IBAction func backBtnPressed(_ sender: UIButton) {
         
         dismiss(animated: true, completion: nil)
